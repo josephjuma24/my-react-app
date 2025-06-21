@@ -40,7 +40,6 @@
     ]
   },
   "devDependencies": {
-    "npm install react-scripts --save",
     "gh-pages": "^6.3.0"
   }
 }
