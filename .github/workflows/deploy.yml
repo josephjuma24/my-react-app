@@ -1,5 +1,4 @@
 name: CI
-
 on:
   push:
     branches: [main]
@@ -11,18 +10,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Use a recent LTS version
+          node-version: '22' # Match your local version (Node.js v22.16.0)
           cache: 'npm'
-
       - name: Install dependencies
-        run: npm install
-
-      - name: Debug dependencies
-        run: npm list react-scripts || echo "react-scripts not found"
-     
+        run: npm ci
       - name: Build application
         run: npm run build
+      - name: Deploy to GitHub Pages
+        run: npm run deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  
