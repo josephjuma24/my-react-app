@@ -1,30 +1,28 @@
-name: Deploy React App to GitHub Pages
+name: CI
 
 on:
   push:
-    branches:
-      - main # Or your default branch
-
+    branches: [main]
+  pull_request:
+    branches: [main]
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18' # Use a recent LTS version
+          cache: 'npm'
 
       - name: Install dependencies
         run: npm install
 
+      - name: Debug dependencies
+        run: npm list react-scripts || echo "react-scripts not found"
+     
       - name: Build application
         run: npm run build
-
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
